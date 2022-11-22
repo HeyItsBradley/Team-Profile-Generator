@@ -168,6 +168,35 @@ const engineerQuestions = [
   },
 ];
 
+const internQuetions = [
+  {
+    type: "input",
+    message: "What is your interns name?",
+    name: "Name",
+  },
+  {
+    type: "input",
+    message: "What is your interns ID?",
+    name: "Id",
+  },
+  {
+    type: "input",
+    message: "What is your interns Email?",
+    name: "Email",
+  },
+  {
+    type: "input",
+    message: "What is your interns school?",
+    name: "school",
+  },
+  {
+    type: "list",
+    message: "What would you like to do next?",
+    choices: ["Add an engineer", "Add an intern", "Finish Build"],
+    name: "menuSelect",
+  },
+];
+
 function engineerStart() {
   console.log("You have added an engineer");
   inquirer.prompt(engineerQuestions).then((Response) => {
@@ -192,6 +221,24 @@ function engineerStart() {
 
 function internStart() {
   console.log("You have added an intern");
+  inquirer.prompt(internQuetions).then((Response) => {
+    console.log(Response);
+    const intern = new Intern(
+      Response.name,
+      Response.id,
+      Response.email,
+      "Intern",
+      Response.school
+    );
+    console.log(engineer);
+    if (Response.menuSelect === "Finish Build") {
+      return;
+    } else if (Response.menuSelect === "Add an engineer") {
+      engineerStart();
+    } else {
+      internStart();
+    }
+  });
 }
 
 function init() {
