@@ -94,13 +94,17 @@ const internQuetions = [
 ];
 
 function generateEngineer(data) {
-  return `<div class="bg-secondary">
-  <h2>${data.name}</h2>
-<h3>${data.className}</h3>
-<p>ID:${data.id}</p>
-<p>Email:${data.email}</p>
-<p>GitHub:${data.github}</p>
-</div>`;
+  return `
+<div class="bg-light text-center p-3 m-3 rounded">
+            <h2>${data.name}</h2>
+            <h3>${data.className}</h3>
+            <p>ID:${data.id}</p>
+            <a href="mailto: ${data.email}"
+              >Email:${data.email}</a
+            >
+            <br>
+            <a href="https://github.com/${data.github}">GitHub:${data.github}</a>
+            </div>`;
 }
 
 function engineerStart() {
@@ -130,13 +134,15 @@ function engineerStart() {
 }
 
 function generateIntern(data) {
-  return `<div class="bg-secondary">
+  return `<div class="bg-light text-center p-3 m-3 rounded">
   <h2>${data.name}</h2>
-<h3>${data.className}</h3>
-<p>ID:${data.id}</p>
-<p>Email:${data.email}</p>
-<p>School:${data.school}</p>
-</div>`;
+  <h3>${data.className}</h3>
+  <p>ID:${data.id}</p>
+  <a href="mailto: ${data.email}"
+    >Email:${data.email}</a
+  >
+  <p>School:${data.school}</p>
+  </div>`;
 }
 
 function internStart() {
@@ -188,16 +194,21 @@ function generateHTML(data) {
       crossorigin="anonymous"
     />
   </head>
-  <body>
+  <body class="bg-secondary">
     <h1 class="text-center bg-primary p-3">My Team</h1>
+    <div class= "d-flex justify-content-center">
+    <div class = "row">
     <main id="main">
-      <div class="bg-secondary">
-        <h2>${data.name}</h2>
-        <h3>${data.className}</h3>
-        <p>ID:${data.id}</p>
-        <p>Email:${data.email}</p>
-        <p>Office Number:${data.officeNumber}</p>
-      </div>
+      
+      <div class="bg-light text-center p-3 m-3 rounded">
+            <h2>${data.name}</h2>
+            <h3>${data.className}</h3>
+            <p>ID:${data.id}</p>
+            <a href="mailto: ${data.email}"
+              >Email:${data.email}</a
+            >
+            <p>Office#:${data.officeNumber}</p>
+            </div>
     </main>
     <!-- JavaScript Bundle with Popper -->
     <script
