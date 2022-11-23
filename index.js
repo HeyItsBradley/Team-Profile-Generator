@@ -1,11 +1,9 @@
-const { timeStamp } = require("console");
 const fs = require("fs");
 const inquirer = require("inquirer");
 const Manager = require("./lib/manager");
-const Employee = require("./lib/employee");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
-
+//prompts for the manager/starter questions for the program
 const startQuestions = [
   {
     type: "input",
@@ -34,7 +32,7 @@ const startQuestions = [
     name: "menuSelect",
   },
 ];
-
+//prompts for the engineer
 const engineerQuestions = [
   {
     type: "input",
@@ -63,7 +61,7 @@ const engineerQuestions = [
     name: "menuSelect",
   },
 ];
-
+//prompts for the inter
 const internQuetions = [
   {
     type: "input",
@@ -92,7 +90,7 @@ const internQuetions = [
     name: "menuSelect",
   },
 ];
-
+//this will take the data of the engineer and use it to create a card fo the engineer
 function generateEngineer(data) {
   return `
 <div class="bg-light text-center p-3 m-3 rounded">
@@ -103,10 +101,10 @@ function generateEngineer(data) {
               >Email:${data.email}</a
             >
             <br>
-            <a href="https://github.com/${data.github}">GitHub:${data.github}</a>
+            <a href="https://github.com/${data.github}" target="_blank">GitHub:${data.github}</a>
             </div>`;
 }
-
+//this will prompt the user if an engineer is added
 function engineerStart() {
   console.log("You have added an engineer");
   inquirer.prompt(engineerQuestions).then((Response) => {
@@ -132,7 +130,7 @@ function engineerStart() {
     }
   });
 }
-
+//this will take the take for the intern and create an html section to be appended
 function generateIntern(data) {
   return `<div class="bg-light text-center p-3 m-3 rounded">
   <h2>${data.name}</h2>
@@ -144,7 +142,7 @@ function generateIntern(data) {
   <p>School:${data.school}</p>
   </div>`;
 }
-
+//this will prompt the user if an intern is added
 function internStart() {
   console.log("You have added an intern");
   inquirer.prompt(internQuetions).then((Response) => {
@@ -170,13 +168,13 @@ function internStart() {
     }
   });
 }
-
+//this will create and html file
 function writeToFile(fileName, data) {
   fs.writeFile(`./dist/${fileName}`, data, (err) => {
     err ? console.error(err) : console.log("success!");
   });
 }
-
+//this will actually generate and and spit out the html so it can be appended.
 function generateHTML(data) {
   return `
   <!DOCTYPE html>
@@ -220,7 +218,7 @@ function generateHTML(data) {
 </html>
 `;
 }
-
+//this will ask the user questoins about the manager and append data to an html file
 function init() {
   inquirer.prompt(startQuestions).then((Response) => {
     const manager = new Manager(
@@ -243,5 +241,5 @@ function init() {
     }
   });
 }
-
+//When index.js is run, this kickstart the program
 init();
