@@ -1,113 +1,12 @@
+const { timeStamp } = require("console");
 const fs = require("fs");
 const inquirer = require("inquirer");
+const Manager = require("./lib/manager");
+const Employee = require("./lib/employee");
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
 
-class Employee {
-  constructor(name, id, email, className) {
-    this.name = name;
-    this.id = id;
-    this.email = email;
-  }
 
-  getName() {
-    return this.name;
-  }
-
-  getId() {
-    return this.id;
-  }
-
-  getEmail() {
-    return this.email;
-  }
-
-  getRole() {
-    return this.className;
-  }
-}
-
-class Manager {
-  constructor(name, id, email, className, officeNumber) {
-    this.name = name;
-    this.id = id;
-    this.className = className;
-    this.email = email;
-    this.officeNumber = officeNumber;
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  getId() {
-    return this.id;
-  }
-
-  getEmail() {
-    return this.email;
-  }
-
-  getRole() {
-    return this.className;
-  }
-}
-
-class Engineer {
-  constructor(name, id, email, className, github) {
-    this.name = name;
-    this.id = id;
-    this.email = email;
-    this.github = github;
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  getId() {
-    return this.id;
-  }
-
-  getEmail() {
-    return this.email;
-  }
-
-  getRole() {
-    return this.className;
-  }
-
-  getGithub() {
-    return this.github;
-  }
-}
-
-class Intern {
-  constructor(name, id, email, className, school) {
-    this.name = name;
-    this.id = id;
-    this.email = email;
-    this.school = school;
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  getId() {
-    return this.id;
-  }
-
-  getEmail() {
-    return this.email;
-  }
-
-  getRole() {
-    return this.className;
-  }
-
-  getSchool() {
-    return this.school;
-  }
-}
 
 const startQuestions = [
   {
@@ -142,17 +41,17 @@ const engineerQuestions = [
   {
     type: "input",
     message: "What is your engineers name?",
-    name: "Name",
+    name: "name",
   },
   {
     type: "input",
     message: "What is your engineers ID?",
-    name: "Id",
+    name: "id",
   },
   {
     type: "input",
     message: "What is your engineers Email?",
-    name: "Email",
+    name: "email",
   },
   {
     type: "input",
@@ -171,17 +70,17 @@ const internQuetions = [
   {
     type: "input",
     message: "What is your interns name?",
-    name: "Name",
+    name: "name",
   },
   {
     type: "input",
     message: "What is your interns ID?",
-    name: "Id",
+    name: "id",
   },
   {
     type: "input",
     message: "What is your interns Email?",
-    name: "Email",
+    name: "email",
   },
   {
     type: "input",
@@ -196,6 +95,16 @@ const internQuetions = [
   },
 ];
 
+function generateEngineer(data) {
+  return `<div class="bg-secondary">
+  <h2>${data.name}</h2>
+<h3>${data.className}</h3>
+<p>ID:${data.id}</p>
+<p>Email:${data.email}</p>
+<p>GitHub:${data.github}</p>
+</div>`;
+}
+
 function engineerStart() {
   console.log("You have added an engineer");
   inquirer.prompt(engineerQuestions).then((Response) => {
@@ -207,6 +116,10 @@ function engineerStart() {
       "Engineer",
       Response.gitHub
     );
+    let madeEngineer = generateEngineer(engineer);
+    fs.appendFile("./dist/example.html", madeEngineer, (err) => {
+      err ? console.error(err) : console.log("engineer was appended");
+    });
     console.log(engineer);
     if (Response.menuSelect === "Finish Build") {
       return;
@@ -216,6 +129,16 @@ function engineerStart() {
       internStart();
     }
   });
+}
+
+function generateIntern(data) {
+  return `<div class="bg-secondary">
+  <h2>${data.name}</h2>
+<h3>${data.className}</h3>
+<p>ID:${data.id}</p>
+<p>Email:${data.email}</p>
+<p>School:${data.school}</p>
+</div>`;
 }
 
 function internStart() {
@@ -229,7 +152,11 @@ function internStart() {
       "Intern",
       Response.school
     );
-    console.log(engineer);
+    let madeIntern = generateIntern(intern);
+    fs.appendFile("./dist/example.html", madeIntern, (err) => {
+      err ? console.error(err) : console.log("intern was appended");
+    });
+    console.log(intern);
     if (Response.menuSelect === "Finish Build") {
       return;
     } else if (Response.menuSelect === "Add an engineer") {
